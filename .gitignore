@@ -10,8 +10,6 @@ venv/
 .DS_Store
 
 finetune_checkpoints/
-pretrain/dataset/
-blocking/*.csv
 
 *.pth
 *.pt
