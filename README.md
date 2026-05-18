@@ -107,11 +107,35 @@ pip install -r requirements.txt
 
 If you use CUDA, install the PyTorch build matching your CUDA version before installing the remaining dependencies. The code uses `xlm-roberta-base` by default. If a local `xlm-roberta-base/` directory exists in the project root, it will be used automatically; otherwise Hugging Face Transformers will download the model.
 
-### Step 2: Fine-tune from a Pre-trained Checkpoint
+### Step 2: Pre-training
 
-If you only want to evaluate the provided fine-tuned checkpoint, skip to Step 3.
+Run SER-oriented multi-task pre-training with HPC, MFP, and TAM:
 
-If `checkpoints/model.pth` is available, fine-tune SANI on the scholar pair classification task:
+```bash
+python pretrain.py \
+  --hpc_jsonl pretrain/dataset/hpc_dataset.jsonl \
+  --mfp_jsonl pretrain/dataset/mfp_dataset.jsonl \
+  --tam_jsonl pretrain/dataset/tam_dataset.jsonl \
+  --dataset_A_neighbors pretrain/dataset/dataset_A_neighbors.json \
+  --dataset_B_neighbors pretrain/dataset/dataset_B_neighbors.json \
+  --save_dir checkpoints \
+  --use_sani 1 \
+  --aggregation_method attention \
+  --device 0 \
+  --max_epochs 2 \
+  --batch_size 32 \
+  --lr 1e-5
+```
+
+The pre-training checkpoint is saved to:
+
+```text
+checkpoints/model.pth
+```
+
+### Step 3: Fine-tuning
+
+Fine-tune SANI on the labeled scholar pair classification task:
 
 ```bash
 python finetune.py \
@@ -138,7 +162,7 @@ The best fine-tuned model is saved to:
 finetune_checkpoints/model.pth
 ```
 
-### Step 3: Evaluate on Challenging Cases
+### Step 4: Evaluation
 
 Evaluate a fine-tuned checkpoint on any challenging subset:
 
@@ -151,69 +175,6 @@ python challenging_cases/evaluate_challenging.py \
 ```
 
 You can replace `name_ambiguity` with `missing_attributes` or `affiliation_shifts`.
-
-## Full Pipeline
-
-### 1. Build Blocking Candidates
-
-The repository already provides processed candidate pairs. To regenerate them:
-
-```bash
-python blocking/blocking.py --rebuild-index
-python blocking/build_train_valid_test.py
-```
-
-The default split selects complete top-5 candidate groups and writes `train.txt`, `valid.txt`, `test.txt`, and `test_order.txt` under `blocking/`.
-
-### 2. Build Neighbor Lists
-
-Neighbor files are also provided. To rebuild them:
-
-```bash
-python pretrain/search_A_neighs.py
-python pretrain/search_B_neighs.py
-```
-
-The generated files are:
-
-```text
-pretrain/dataset/dataset_A_neighbors.json
-pretrain/dataset/dataset_B_neighbors.json
-```
-
-### 3. Build Pre-training Data
-
-```bash
-python prepare_pretraining_dataset.py --task hpc
-python prepare_pretraining_dataset.py --task mfp
-python prepare_pretraining_dataset.py --task tam
-```
-
-### 4. SER-oriented Pre-training
-
-```bash
-python pretrain.py \
-  --hpc_jsonl pretrain/dataset/hpc_dataset.jsonl \
-  --mfp_jsonl pretrain/dataset/mfp_dataset.jsonl \
-  --tam_jsonl pretrain/dataset/tam_dataset.jsonl \
-  --dataset_A_neighbors pretrain/dataset/dataset_A_neighbors.json \
-  --dataset_B_neighbors pretrain/dataset/dataset_B_neighbors.json \
-  --save_dir checkpoints \
-  --use_sani 1 \
-  --aggregation_method attention \
-  --device 0 \
-  --max_epochs 2 \
-  --batch_size 32 \
-  --lr 1e-5
-```
-
-The pre-training checkpoint is saved to:
-
-```text
-checkpoints/model.pth
-```
-
-To run the encoder without neighborhood injection, set `--use_sani 0`. Available aggregation methods are `attention`, `top1`, `mean`, and `max`.
 
 ## Analysis and Case Study
 
@@ -261,11 +222,3 @@ Converted files for several baseline systems are provided in `baseline_data/`:
 | `baseline_data/Ditto/` | Tab-separated pair files |
 | `baseline_data/HierGAT/` | HierGAT-style train/valid/test files |
 | `baseline_data/Sudowoodo/` | Supervised and unlabeled pair files |
-
-## Citation
-
-If you use this repository, please cite **"Soft-Aligned Attentive Neighborhood Injection for Heterogeneous Scholar Entity Resolution"**. The BibTeX entry will be updated after publication.
-
-## Acknowledgement
-
-This implementation builds on PyTorch, Hugging Face Transformers, XLM-R, and a vendored version of `retriv` for sparse retrieval. The repository also includes converted data formats for comparison with existing entity-resolution baselines.
