@@ -1,0 +1,11 @@
+numpy
+nltk
+numba>=0.54.1
+orjson
+tqdm
+optuna
+unidecode
+scikit-learn
+ranx
+indxr
+oneliner_utils

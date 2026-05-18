@@ -1,0 +1,26 @@
+# SER project environment
+# Recommended Python: 3.9-3.11
+#
+# If your server uses CUDA, install a PyTorch build matching the server CUDA
+# version when needed. The generic torch entry below is enough for many pip
+# environments, but CUDA-specific wheels can also be installed from PyTorch's
+# official index before running the rest of this file.
+
+torch>=2.1.0
+transformers>=4.35.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+numpy>=1.23.0,<2.0.0
+pandas>=1.5.0
+scikit-learn>=1.2.0
+tqdm>=4.64.0
+matplotlib>=3.6.0
+
+pypinyin>=0.48.0
+nltk>=3.8.0
+
+# Local vendored sparse retriever used by blocking/blocking.py.
+# retriv 0.2.3 imports this but does not declare it in setup.py.
+multipipe
+-e ./vendor_src/retriv-0.2.3

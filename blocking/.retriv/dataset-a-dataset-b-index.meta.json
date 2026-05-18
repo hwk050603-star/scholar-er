@@ -1,0 +1,21 @@
+{
+  "right_path": "G:\\SER\\blocking\\dataset_B_aug.csv",
+  "right_mtime_ns": 1777393646386902400,
+  "right_size": 5969473,
+  "columns": [
+    "Name",
+    "Affiliation",
+    "Papers",
+    "Projects"
+  ],
+  "weights": {
+    "Name": 3.0,
+    "Affiliation": 2.0,
+    "Research Interests": 1.5,
+    "Papers": 1.0,
+    "Projects": 1.0
+  },
+  "tokenizer": "whitespace",
+  "stemmer": null,
+  "stopwords": null
+}
