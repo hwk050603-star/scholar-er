@@ -55,15 +55,15 @@ The processed data used by this repository is already organized under `blocking/
 
 ### Entity Tables and Pair Splits
 
-| File | Description | Size |
-|:--|:--|--:|
-| `blocking/dataset_A_aug.csv` | Augmented source-A scholar table | 18,572 rows |
-| `blocking/dataset_B_aug.csv` | Augmented source-B scholar table | 13,727 rows |
-| `blocking/A_B_mapping.csv` | Gold entity mappings | 12,112 rows |
-| `blocking/A_B_blocking_candidates.csv` | Retrieved candidate pairs | 92,860 rows |
-| `blocking/train.txt` | Training pairs | 20,000 rows |
-| `blocking/valid.txt` | Validation pairs | 5,000 rows |
-| `blocking/test.txt` | Test pairs | 5,000 rows |
+| File                                   | Description                      |        Size |
+| :------------------------------------- | :------------------------------- | ----------: |
+| `blocking/dataset_A_aug.csv`           | Augmented source-A scholar table | 18,572 rows |
+| `blocking/dataset_B_aug.csv`           | Augmented source-B scholar table | 13,727 rows |
+| `blocking/A_B_mapping.csv`             | Gold entity mappings             | 12,112 rows |
+| `blocking/A_B_blocking_candidates.csv` | Retrieved candidate pairs        | 92,860 rows |
+| `blocking/train.txt`                   | Training pairs                   | 20,000 rows |
+| `blocking/valid.txt`                   | Validation pairs                 |  5,000 rows |
+| `blocking/test.txt`                    | Test pairs                       |  5,000 rows |
 
 Each pair file is a tab-separated file in the format:
 
@@ -75,33 +75,33 @@ where `label=1` means match and `label=0` means non-match.
 
 ### Pre-training Data
 
-| File | Task | Size |
-|:--|:--|--:|
-| `pretrain/dataset/hpc_dataset.jsonl` | Homonym Pair Classification | 72,672 samples |
-| `pretrain/dataset/mfp_dataset.jsonl` | Masked Field Prediction | 18,103 samples |
-| `pretrain/dataset/tam_dataset.jsonl` | Timeline-Aware Affiliation Matching | 39,825 samples |
-| `pretrain/dataset/dataset_A_neighbors.json` | Source-A neighbor lists | top-10 neighbors |
-| `pretrain/dataset/dataset_B_neighbors.json` | Source-B neighbor lists | top-10 neighbors |
+| File                                        | Task                                |             Size |
+| :------------------------------------------ | :---------------------------------- | ---------------: |
+| `pretrain/dataset/hpc_dataset.jsonl`        | Homonym Pair Classification         |   72,672 samples |
+| `pretrain/dataset/mfp_dataset.jsonl`        | Masked Field Prediction             |   18,103 samples |
+| `pretrain/dataset/tam_dataset.jsonl`        | Timeline-Aware Affiliation Matching |   39,825 samples |
+| `pretrain/dataset/dataset_A_neighbors.json` | Source-A neighbor lists             | top-10 neighbors |
+| `pretrain/dataset/dataset_B_neighbors.json` | Source-B neighbor lists             | top-10 neighbors |
 
 ### Challenging Cases
 
 The directory `challenging_cases/` contains three stress-test subsets:
 
-| Directory | Purpose |
-|:--|:--|
-| `name_ambiguity/` | Same or highly similar names with different identities |
-| `missing_attributes/` | Records with missing or incomplete fields |
-| `affiliation_shifts/` | Scholars whose affiliations change across time |
+| Directory             | Purpose                                                |
+| :-------------------- | :----------------------------------------------------- |
+| `name_ambiguity/`     | Same or highly similar names with different identities |
+| `missing_attributes/` | Records with missing or incomplete fields              |
+| `affiliation_shifts/` | Scholars whose affiliations change across time         |
 
 ## Model Checkpoint
 
-The best fine-tuned SANI checkpoint has been uploaded to Hugging Face:
+The model checkpoint is available from an anonymized Hugging Face repository for review:
 
 ```text
-https://huggingface.co/Kevinn11/scholar-er
+https://huggingface.co/anonymous-er-artifact/scholar-er-review
 ```
 
-Please use this checkpoint together with the source code in this repository, since the model depends on the custom SANI architecture and neighbor-injection logic implemented in `model.py`.
+The final non-anonymous checkpoint repository will be released upon acceptance.
 
 ## Quick Start
 
@@ -225,10 +225,10 @@ case_study/case_neighbor_heatmap.pdf
 
 Converted files for several baseline systems are provided in `baseline_data/`:
 
-| Directory | Format |
-|:--|:--|
-| `baseline_data/BatchER/` | JSON train/valid/test and challenging-case files |
-| `baseline_data/ComEM/` | CSV files for pair matching and challenging cases |
-| `baseline_data/Ditto/` | Tab-separated pair files |
-| `baseline_data/HierGAT/` | HierGAT-style train/valid/test files |
-| `baseline_data/Sudowoodo/` | Supervised and unlabeled pair files |
+| Directory                  | Format                                            |
+| :------------------------- | :------------------------------------------------ |
+| `baseline_data/BatchER/`   | JSON train/valid/test and challenging-case files  |
+| `baseline_data/ComEM/`     | CSV files for pair matching and challenging cases |
+| `baseline_data/Ditto/`     | Tab-separated pair files                          |
+| `baseline_data/HierGAT/`   | HierGAT-style train/valid/test files              |
+| `baseline_data/Sudowoodo/` | Supervised and unlabeled pair files               |
