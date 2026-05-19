@@ -93,6 +93,16 @@ The directory `challenging_cases/` contains three stress-test subsets:
 | `missing_attributes/` | Records with missing or incomplete fields |
 | `affiliation_shifts/` | Scholars whose affiliations change across time |
 
+## Model Checkpoint
+
+The best fine-tuned SANI checkpoint has been uploaded to Hugging Face:
+
+```text
+https://huggingface.co/Kevinn11/scholar-er
+```
+
+Please use this checkpoint together with the source code in this repository, since the model depends on the custom SANI architecture and neighbor-injection logic implemented in `model.py`.
+
 ## Quick Start
 
 ### Step 1: Environment Setup
