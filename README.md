@@ -8,7 +8,7 @@ This repository contains the source code, processed data, checkpoints, baseline-
 
 Scholar entity resolution is difficult when records come from heterogeneous sources: names may be written in Chinese, English, abbreviation, or reversed order; affiliations may shift over time; and important fields such as research interests may be missing from one side. Our method introduces **Soft-Aligned Attentive Neighborhood Injection (SANI)**, which retrieves neighborhood scholars, softly aligns their contextual signals to the target scholar representation, and injects the aggregated neighborhood evidence into a multilingual encoder for match/non-match prediction.
 
-<img src="figure/pipeline.pdf" width="900" />
+<a href="figure/pipeline.pdf"><img src="figure/pipeline.png" width="900" /></a>
 
 ## Code Structure
 
@@ -35,7 +35,7 @@ Scholar entity resolution is difficult when records come from heterogeneous sour
 
 SANI first serializes heterogeneous scholar attributes into pseudo-sentences with schema tokens `COL` and `VAL`, then encodes scholar pairs with XLM-R. For each scholar, retrieved neighbors are encoded with the same language model. The target scholar span acts as a query, while neighbor representations provide keys and values. A soft attention module computes relevance weights over neighbors, aggregates useful neighborhood evidence, and injects it back into the scholar representation through residual fusion and self-attention.
 
-<img src="figure/SANI.pdf" width="900" />
+<a href="figure/SANI.pdf"><img src="figure/SANI.png" width="900" /></a>
 
 The training pipeline has two stages:
 
@@ -47,7 +47,7 @@ The training pipeline has two stages:
 
 The following example illustrates why neighborhood evidence is useful: missing or ambiguous fields can be inferred from structurally related scholars in the same academic context.
 
-<img src="figure/Sample.pdf" width="900" />
+<a href="figure/Sample.pdf"><img src="figure/Sample.png" width="900" /></a>
 
 ## Datasets
 
@@ -192,7 +192,7 @@ You can replace `name_ambiguity` with `missing_attributes` or `affiliation_shift
 
 The supplied K analysis shows that using a moderate number of neighbors works best in this setup. In the saved plot, K=3 reaches the highest F1 score.
 
-<img src="figure/k_analysis_prf.pdf" width="560" />
+<a href="figure/k_analysis_prf.pdf"><img src="figure/k_analysis_prf.png" width="560" /></a>
 
 Regenerate the plot with:
 
@@ -219,7 +219,7 @@ case_study/case_neighbor_heatmap.png
 case_study/case_neighbor_heatmap.pdf
 ```
 
-<img src="case_study/case_neighbor_heatmap.pdf" width="620" />
+<a href="case_study/case_neighbor_heatmap.pdf"><img src="case_study/case_neighbor_heatmap.png" width="620" /></a>
 
 ## Baseline Data
 
