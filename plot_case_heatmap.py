@@ -197,7 +197,7 @@ def plot_heatmap(values, labels, side_meta, case_map):
 
     left = side_meta["left"]
     right = side_meta["right"]
-    pred = "Match" if str(left["prediction"]) == "1" else "Not Match"
+    pred = "Match" if str(left["prediction"]) == "1" else "Non-match"
 
     row_labels = [
         target_label(left, "left", case_map),
